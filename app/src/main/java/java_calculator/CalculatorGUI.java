@@ -1,15 +1,19 @@
 package java_calculator;
 
 import java.awt.BorderLayout;
-
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 public class CalculatorGUI extends JFrame {
     private JTextField display;
@@ -26,7 +30,12 @@ public class CalculatorGUI extends JFrame {
 
         display = new JTextField("0");
         display.setEditable(false);
-
+        display.setFont(new Font("Aerial", Font.BOLD, 30));
+        display.setPreferredSize(new Dimension(320, 60));
+        display.setBorder(BorderFactory.createCompoundBorder(
+                display.getBorder(),
+                new EmptyBorder(10, 15, 10, 15)));
+        setLayout(new BorderLayout(10, 15));
         add(display, BorderLayout.NORTH);
         JPanel gridPanel = createGridPanel();
         add(gridPanel, BorderLayout.CENTER);
@@ -35,26 +44,27 @@ public class CalculatorGUI extends JFrame {
     }
 
     private JPanel createSouthPanel() {
-        JPanel panel = new JPanel((new GridLayout(1, 2, 4, 5)));
-        String[] buttons = {
-                "C", "="
-        };
+        JPanel panel = new JPanel((new FlowLayout(FlowLayout.RIGHT, 10, 10)));
         ActionListener listener = new ButtonClickListener();
-        for (String text : buttons) {
-            if (text.isEmpty()) {
-                panel.add(new JPanel());
-            } else {
 
-                JButton button = new JButton(text);
-                button.addActionListener(listener);
-                panel.add(button);
-            }
-        }
+        JButton clearButton = new JButton("C");
+
+        clearButton.setPreferredSize(new Dimension(60, 40));
+        clearButton.addActionListener(listener);
+
+        JButton equalsButton = new JButton("=");
+        equalsButton.setPreferredSize(new Dimension(60, 40));
+        equalsButton.addActionListener(listener);
+
+        panel.add(clearButton);
+        panel.add(equalsButton);
+
         return panel;
     }
 
     private JPanel createGridPanel() {
-        JPanel panel = new JPanel(new GridLayout(4, 4, 4, 4));
+        JPanel panel = new JPanel(new GridLayout(4, 4, 8, 8));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         String[] buttons = {
                 "1", "2", "3", "4",
                 "5", "6", "7", "8",
