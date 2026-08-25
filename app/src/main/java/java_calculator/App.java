@@ -4,11 +4,10 @@
 package java_calculator;
 
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        Addition add1 = new Addition();
+        double result = add1.execute(15, 15);
+        System.out.println(result);
     }
 }
